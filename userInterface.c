@@ -18,7 +18,7 @@ void userInterface()
 
 	do
 	{
-		printf("**************************MENU**************************\n");
+		printf("***********************************MENU***********************************\n");
 		printf("1.)Add a student.\n");
 		printf("2.)Show all students.\n");
 		printf("3.)Delete all students.\n");
@@ -37,6 +37,7 @@ void userInterface()
 		switch(choice)
 		{
 			case 1:
+			  printf("--------------------------------------------------------------------------\n");
 			  printf("Name: ");
 			  getchar();
 			  fgets(studentName,40,stdin);

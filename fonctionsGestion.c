@@ -22,7 +22,7 @@ void showInfoStudents(Student **chain,int tableSize)
 
 		while(currentStudent != NULL)
 		{
-			printf("-------------------------------------------------------------------------\n");
+			printf("--------------------------------------------------------------------------\n");
 			printf("Name: %s",currentStudent->name);
 			printf("Id: %s\n",currentStudent->id);
 			printf("Age: %d\n",currentStudent->age);
@@ -43,7 +43,7 @@ int hash(char chain[])
 	{
 		hashValue += chain[i];
 	}
-	hashValue %= 100;
+	hashValue %= 27;
 	return hashValue;
 }
 Student* searchHashTable(char *chain)
