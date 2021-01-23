@@ -1,0 +1,8 @@
+Name:
+Id:
+Age:
+Score in Maths:
+Score in English:
+Score in French:
+Score in Physics:
+Score in Computer Science:
