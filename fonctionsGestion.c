@@ -7,50 +7,33 @@
 #define FRENCH_INDEX 2
 #define PHYSICS_INDEX 3
 #define COMPUTER_INDEX 4
-void initialise(Student **chain,int tableSize)
-{
-	for (int i = 0; i < tableSize; ++i)
-	{
-		*(chain+i) = NULL;
-	}
-}
-void showInfoStudents(Student **chain,int tableSize)
-{
-	for (int i = 0; i < tableSize; ++i)
-	{
-		Student *currentStudent = chain[i];
 
-		while(currentStudent != NULL)
-		{
-			printf("--------------------------------------------------------------------------\n");
-			printf("Name: %s",currentStudent->name);
-			printf("Id: %s\n",currentStudent->id);
-			printf("Age: %d\n",currentStudent->age);
-			printf("Score in Maths: %f\n",currentStudent->score[MATH_INDEX]);
-			printf("Score in English: %f\n",currentStudent->score[ENGLISH_INDEX]);
-			printf("Score in French: %f\n",currentStudent->score[FRENCH_INDEX]);
-			printf("Score in Physics: %f\n",currentStudent->score[PHYSICS_INDEX]);
-			printf("Score in Computer Science: %f\n",currentStudent->score[COMPUTER_INDEX]);
-			printf("Overall average: %f\n",currentStudent->average);
-			currentStudent = currentStudent->nextStudent;
-		}
-	}
-}
-int hash(char chain[])
+StudentList* initialise()
 {
-	int hashValue = 0;
-	for (int i = 0;chain[i] != '\0'; ++i)
+	StudentList *listStudents = (StudentList*)malloc(sizeof(StudentList));
+
+	listStudents->firstStudent = NULL;
+
+	return listStudents;
+}
+void showInfoStudents(StudentList *listStudents)
+{
+	Student *currentStudent = listStudents->firstStudent;
+
+	while(currentStudent != NULL)
 	{
-		hashValue += chain[i];
+		printf("--------------------------------------------------------------------------\n");
+		printf("Name: %s",currentStudent->name);
+		printf("Id: %s\n",currentStudent->id);
+		printf("Age: %d\n",currentStudent->age);
+		printf("Score in Maths: %f\n",currentStudent->score[MATH_INDEX]);
+		printf("Score in English: %f\n",currentStudent->score[ENGLISH_INDEX]);
+		printf("Score in French: %f\n",currentStudent->score[FRENCH_INDEX]);
+		printf("Score in Physics: %f\n",currentStudent->score[PHYSICS_INDEX]);
+		printf("Score in Computer Science: %f\n",currentStudent->score[COMPUTER_INDEX]);
+		printf("Overall average: %f\n",currentStudent->average);
+		currentStudent = currentStudent->nextStudent;
 	}
-	hashValue %= 27;
-	return hashValue;
-}
-Student* searchHashTable(char *chain)
-{
-	int value = 0;
-	value = hash(chain);
-	return (Student*)value;
 }
 float studentAverage(float *studentScore,int sizeScoreTable)
 {
@@ -64,7 +47,7 @@ float studentAverage(float *studentScore,int sizeScoreTable)
 
 	return mean;
 }
-void addStudent(Student **table,char* nameStudent,char* idStudent,int ageStudent,float studentScore[],int sizeScoreTable)
+void addStudent(StudentList *listStudents,char* nameStudent,char* idStudent,int ageStudent,float studentScore[],int sizeScoreTable)
 {
 	Student *newStudent = (Student*)malloc(sizeof(Student));
 
@@ -79,12 +62,11 @@ void addStudent(Student **table,char* nameStudent,char* idStudent,int ageStudent
 	newStudent->average = studentAverage(studentScore,sizeScoreTable);
 	newStudent->nextStudent = NULL;
 
-	int position = hash(nameStudent);
-
-	Student* student = table[position];
+	Student *student = listStudents->firstStudent;
+	
 	if (student == NULL)
 	{
-		table[position] = newStudent;
+		listStudents->firstStudent = newStudent;
 	}else
 	{
 		while(student->nextStudent != NULL)
@@ -94,17 +76,15 @@ void addStudent(Student **table,char* nameStudent,char* idStudent,int ageStudent
 		student->nextStudent = newStudent;
 	}
 }
-void deleteStudents(Student **table,int tableSize)
+void deleteStudents(StudentList *listStudents)
 {
-	for (int i = 0; i < tableSize; ++i)
+	Student *currentStudent = listStudents->firstStudent,*toDelete = NULL;
+
+	while(currentStudent != NULL)
 	{
-		Student *currentStudent = *(table+i),*toDelete = NULL;
-		while(currentStudent != NULL)
-		{
-			toDelete = currentStudent;
-			currentStudent = currentStudent->nextStudent;
-			free(toDelete);
-		}
-		*(table + i) = NULL;
+		toDelete = currentStudent;
+		currentStudent = currentStudent->nextStudent;
+		free(toDelete);
 	}
+	listStudents->firstStudent = NULL;
 }	

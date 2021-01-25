@@ -6,11 +6,14 @@ struct Student
 	float score[5],average;
 	Student *nextStudent;
 };
-void initialise(Student **chain,int tableSize);
-void showInfoStudents(Student **chain,int tableSize);
-int hash(char chain[]);
-Student* searchHashTable(char *chain);
-void addStudent(Student **table,char* nameStudent,char* idStudent,int ageStudent,float studentScore[],int sizeScoreTable);
-void deleteStudents(Student **table,int tableSize);
+typedef struct StudentList StudentList;
+struct StudentList
+{
+	Student *firstStudent;
+};
+StudentList* initialise();
+void showInfoStudents(StudentList *listStudents);
+void addStudent(StudentList *listStudents,char* nameStudent,char* idStudent,int ageStudent,float studentScore[],int sizeScoreTable);
+void deleteStudents(StudentList *listStudents);
 void userInterface();
 float studentAverage(float *studentScore,int sizeScoreTable);

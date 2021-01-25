@@ -10,10 +10,11 @@
 
 void userInterface()
 {
-	int choice = 0;
-    Student *infoStudents[27];
+	long choice = 0;
+	char control[100] = {'0'};
+    StudentList *myListStudents;
 
-    initialise(infoStudents,27);
+    myListStudents = initialise();
 	printf("Hello sir, What would you like to do ?\n");
 
 	do
@@ -27,7 +28,8 @@ void userInterface()
 		do
 		{
 			printf("Please select(write) the number corresponding to your choice .\n");
-			scanf("%d",&choice);
+			scanf("%s",control);
+			choice = strtol(control,NULL,10);
 		}while(choice > 4 || choice < 1);
 
 		char studentName[40],studentId[11];
@@ -55,13 +57,13 @@ void userInterface()
 			  scanf("%f",studentScore+PHYSICS_INDEX);
 			  printf("Score in Computer Science: ");
 			  scanf("%f",studentScore+COMPUTER_INDEX);
-			  addStudent(infoStudents,studentName,studentId,studentAge,studentScore,5);
+			  addStudent(myListStudents,studentName,studentId,studentAge,studentScore,5);
 			  break;
 			case 2:
-		      showInfoStudents(infoStudents,27);
+		      showInfoStudents(myListStudents);
 			  break;
 			case 3:
-			  deleteStudents(infoStudents,27);
+			  deleteStudents(myListStudents);
 			  printf("The data of all the students has been deleted!\n");
 			  break;
 		  	case 4:
