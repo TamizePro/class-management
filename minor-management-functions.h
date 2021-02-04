@@ -1,0 +1,10 @@
+int getChoice(); 
+int getSearchChoice1();
+int getSearchChoice2();
+void printMenu();
+void printSearchMenu1();
+void printSearchMenu2();
+void controlChain(char *chain);
+void upperCase(char *chain);
+int isSortAlphabetic(char *chain1,char *chain2);
+float studentAverage(float *studentScore,int sizeScoreTable);
