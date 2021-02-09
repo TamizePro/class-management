@@ -16,6 +16,7 @@ void userInterface()
     StudentList *myListStudents = initialise();
 
     loadData(myListStudents);
+    updateStudentListInfo(myListStudents);
 	printf("Hello sir, What would you like to do ?\n");
 
 	do
@@ -25,12 +26,12 @@ void userInterface()
 		switch(choice)
 		{
 			case 1: ;
-				char studentName[40],studentId[11];
+				char studentName[40],studentId[15];
 		    	int studentAge;
 				float studentScore[5];
 
-				getStudentInfo(myListStudents,studentName,studentId,studentAge,studentScore,5);
-				sortStudents(myListStudents);
+				getStudentInfo(myListStudents,studentName,studentId,studentAge,studentScore);
+				updateStudentListInfo(myListStudents);
 				break;
 			case 2:
 				if(myListStudents->firstStudent == NULL)
@@ -39,6 +40,16 @@ void userInterface()
 			    }
 			    else
 				{
+					int orderChoice = getStudentsOrder();
+
+					if (orderChoice == 1)
+					{
+						sortStudents(myListStudents);
+					}else
+					{
+						sortStudentsByRank(myListStudents);
+					}
+
 					printf("This is the beginning of the list of students\n");
 			  		showInfoStudents(myListStudents);
 			  		printf("------------------------------------------------------------------------------------\n");
@@ -52,8 +63,13 @@ void userInterface()
 			    }
 			    else
 				{
-			  		deleteStudents(myListStudents);
-					printf("The data of all the students has been deleted!\n");
+					int deleteChoice = getDeleteValidation();
+
+					if (deleteChoice == 1)
+					{
+						deleteStudents(myListStudents);
+						printf("The data of all the students has been deleted!\n");
+					}
 			    }
 			    break;
 		  	case 4:
@@ -65,10 +81,15 @@ void userInterface()
 					searchUserInterface(myListStudents);
 		  	    }
 		  	    break;
-			case 5:
+		  	case 5:
+				printStudentListInfo(myListStudents);
+				break;
+			case 6:
 				saveData(myListStudents);
 				deleteStudents(myListStudents);
 			  	break;
 		}
-	}while(choice != 5);
+	}while(choice != 6);
+	
+	free(myListStudents);
 }

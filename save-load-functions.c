@@ -24,11 +24,11 @@ void saveData(StudentList *listStudents)
     		controlChain(currentStudent->name);
     		controlChain(currentStudent->id);
     		fprintf(saveFile,"%s;%s;%d;",currentStudent->name,currentStudent->id,currentStudent->age);
-    		fprintf(saveFile, "%f;",currentStudent->score[MATH_INDEX]);
-    		fprintf(saveFile, "%f;",currentStudent->score[ENGLISH_INDEX]);
-    		fprintf(saveFile, "%f;",currentStudent->score[FRENCH_INDEX]);
-    		fprintf(saveFile, "%f;",currentStudent->score[PHYSICS_INDEX]);
-    		fprintf(saveFile, "%f\n",currentStudent->score[COMPUTER_INDEX]);
+    		fprintf(saveFile, "%3.3f;",currentStudent->score[MATH_INDEX]);
+    		fprintf(saveFile, "%3.3f;",currentStudent->score[ENGLISH_INDEX]);
+    		fprintf(saveFile, "%3.3f;",currentStudent->score[FRENCH_INDEX]);
+    		fprintf(saveFile, "%3.3f;",currentStudent->score[PHYSICS_INDEX]);
+    		fprintf(saveFile, "%3.3f\n",currentStudent->score[COMPUTER_INDEX]);
     		currentStudent = currentStudent->nextStudent;
     	}
     	fclose(saveFile);
@@ -41,7 +41,7 @@ void saveData(StudentList *listStudents)
 void loadData(StudentList *listStudents)
 {
 	FILE *saveFile = NULL;
-	char data[TAILLE_MAX] = "",studentName[40],studentId[11];
+	char data[TAILLE_MAX] = "",studentName[40],studentId[15];
     int studentAge = 0;
     float studentScore[5];
 
@@ -53,7 +53,7 @@ void loadData(StudentList *listStudents)
         {
             partitionData(data,studentName,studentId,&studentAge,studentScore);
             treatName(studentName);
-            addStudent(listStudents,studentName,studentId,studentAge,studentScore,5);
+            addStudent(listStudents,studentName,studentId,studentAge,studentScore);
         }
         fclose(saveFile);
     }

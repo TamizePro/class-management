@@ -9,50 +9,70 @@ void searchUserInterface(StudentList *listStudents)
 {
 	StudentList *correspondenceList = initialise();
 	char searchChain[40];
-	int searchMenuChoice1 = 0,searchMenuChoice2 = 0;
+	int searchMainChoice = 0,searchSubChoice1 = 0,searchSubChoice2 = 0;
 
 	do
 	{
-		printf("************************************SEARCH**MENU************************************\n");
-		printf("Please enter the name of the student you're looking for.\n");
-		fgets(searchChain,40,stdin);
-		controlChain(searchChain);
-		search(listStudents,correspondenceList,searchChain,5);
+		searchMainChoice = getSearchOption();
 
-		if (correspondenceList->firstStudent == NULL)
+		if (searchMainChoice == 1)
 		{
-		  	printf("No student has a name corresponding to what you entered!\n");
-		  	searchMenuChoice1 = getSearchChoice1();
-		}else if (correspondenceList->firstStudent->nextStudent == NULL)
+			printf("Please enter the name of the student you're looking for.\n");
+		}else if (searchMainChoice == 2)
 		{
-		  	char studentName[40],studentId[11];
-		    int studentAge;
-			float studentScore[5];
+			printf("Please enter the id of the student you're looking for.\n");
+		}
 
-		  	printf("This is the only student corresponding to your entry.\n");
-		  	showInfoStudents(correspondenceList);
-		  	searchMenuChoice2 = getSearchChoice2();
-
-		  	switch(searchMenuChoice2)
-		  	{
-		  	  	case 1:
-		  	  		deleteOneStudent(listStudents,searchChain);
-		  	  		getStudentInfo(listStudents,studentName,studentId,studentAge,studentScore,5);
-		  	  		sortStudents(listStudents);
-		  	  	    searchMenuChoice1 = getSearchChoice1();
-		  	  	    break;
-		  	  	case 2:
-					deleteOneStudent(listStudents,searchChain);
-					printf("The data of the student was deleted!\n");
-					searchMenuChoice1 = getSearchChoice1();
-					break;
-			}
-		}else
+		if (searchMainChoice != 3)
 		{
-		  	printf("These are the students corresponding to your entry.\n");
-		  	showInfoStudents(correspondenceList);
-		  	searchMenuChoice1 = getSearchChoice1();
+			fgets(searchChain,40,stdin);
+			controlChain(searchChain);
+			search(listStudents,correspondenceList,searchChain,searchMainChoice);
+			printSearchResults(listStudents,correspondenceList,searchChain,&searchSubChoice1,&searchSubChoice2);
 		}
 		deleteStudents(correspondenceList);
-	}while (searchMenuChoice1 != 2 && searchMenuChoice2 != 4);
+	}while (searchMainChoice != 3 && searchSubChoice1 != 2 && searchSubChoice2 != 4);
+
+	free(correspondenceList);
+}
+void printSearchResults(StudentList *listStudents,StudentList *correspondingStudentsList,char *chain,int *subChoice1,int *subChoice2)
+{
+	if (correspondingStudentsList->firstStudent == NULL)
+	{
+	  	printf("No student has a name corresponding to what you entered!\n");
+	  	*subChoice1 = getSearchChoice1();
+	}else if (correspondingStudentsList->firstStudent->nextStudent == NULL)
+	{
+	  	printf("This is the only student corresponding to your entry:\n");
+	  	showInfoStudents(correspondingStudentsList);
+	  	printf("------------------------------------------------------------------------------------\n");
+	  	*subChoice2 = getSearchChoice2();
+
+	  	switch(*subChoice2)
+	  	{
+	  	  	case 1: ;
+	  	  		char studentName[40],studentId[15];
+	    		int studentAge;
+				float studentScore[5];
+
+	  	  		deleteOneStudent(listStudents,chain);
+	  	  		updateStudentListInfo(listStudents);
+	  	  		getStudentInfo(listStudents,studentName,studentId,studentAge,studentScore);
+	  	  	    *subChoice1 = getSearchChoice1();
+	  	  	    break;
+		    case 2:
+				deleteOneStudent(listStudents,chain);
+				printf("The data of the student was deleted!\n");
+				updateStudentListInfo(listStudents);
+				*subChoice1 = getSearchChoice1();
+				break;
+		}
+	}else
+	{
+	  	printf("These are the students corresponding to your entry:\n");
+	  	printf("------------------------------------------------------------------------------------\n");
+	  	showInfoStudents(correspondingStudentsList);
+	  	printf("This is the end of the list of students\n");
+	  	*subChoice1 = getSearchChoice1();
+	}
 }

@@ -11,7 +11,8 @@ void printMenu()
 	printf("2.)Show all students.\n");
 	printf("3.)Delete all students.\n");
 	printf("4.)Search for a student.\n");
-	printf("5.)Stop working.\n");
+	printf("5.)See the general information of the class.\n");
+	printf("6.)Stop working.\n");
 	printf("Please select(write) the number corresponding to your choice .\n");
 }
 int getChoice()
@@ -24,7 +25,7 @@ int getChoice()
 		printMenu();
 		fgets(control,10,stdin);
 		menuChoice = (int)strtol(control,NULL,10);
-	}while(menuChoice > 5 || menuChoice < 1);
+	}while(menuChoice > 6 || menuChoice < 1);
 
 	return menuChoice;
 }
@@ -74,6 +75,73 @@ int getSearchChoice2()
 
 	return searchChoice;
 }
+void printSearchMenuMain()
+{
+	printf("************************************SEARCH**MENU************************************\n");
+	printf("What would you like to do?\n");
+	printf("1.)Search by name.\n");
+	printf("2.)search by id.\n");
+	printf("3.)return to the main menu.\n");
+	printf("Please select(write) the number corresponding to your choice .\n");
+}
+int getSearchOption()
+{
+	int searchChoice = 0;
+	char control[10] = {'0'};
+
+	do
+	{
+		printSearchMenuMain();
+		fgets(control,10,stdin);
+		searchChoice = (int)strtol(control,NULL,10);
+	}while (searchChoice > 3 || searchChoice < 1);
+
+	return searchChoice;
+}
+void printDeleteValidationMenu()
+{
+	printf("********************************DELETE*ALL*STUDENTS******************************\n");
+	printf("Are you sure you want to delete the information of all the students?\n");
+	printf("1.)Yes.\n");
+	printf("2.)No.\n");
+	printf("Please select(write) the number corresponding to your choice .\n");
+}
+int getDeleteValidation()
+{
+	int confirmChoice = 0;
+	char control[10] = {'0'};
+
+	do
+	{
+		printDeleteValidationMenu();
+		fgets(control,10,stdin);
+		confirmChoice = (int)strtol(control,NULL,10);
+	}while (confirmChoice > 2 || confirmChoice < 1);
+
+	return confirmChoice;
+}
+void printSortOptions()
+{
+	printf("********************************SHOW**ALL**STUDENTS*******************************\n");
+	printf("Which order will you prefer?\n");
+	printf("1.)Alphabetical order.\n");
+	printf("2.)Ranking order.\n");
+	printf("Please select(write) the number corresponding to your choice .\n");
+}
+int getStudentsOrder()
+{
+	int sortChoice = 0;
+	char control[10] = {'0'};
+
+	do
+	{
+		printSortOptions();
+		fgets(control,10,stdin);
+		sortChoice = (int)strtol(control,NULL,10);
+	}while (sortChoice > 2 || sortChoice < 1);
+
+	return sortChoice;
+}
 void controlChain(char *chain)
 {
 	int i = 0;
@@ -97,15 +165,15 @@ void upperCase(char *chain)
         i++; 
     }
 }
-float studentAverage(float *studentScore,int sizeScoreTable)
+float studentAverage(float *studentScore)
 {
 	float mean = 0;
 
-	for (int i = 0; i < sizeScoreTable; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
-		mean += studentScore[i];
+		mean += studentScore[i];//sums the different scores
 	}
-	mean /= sizeScoreTable;
+	mean /= 5;
 
 	return mean;
 }
@@ -119,11 +187,26 @@ int isSortAlphabetic(char *chain1,char *chain2)
 	}
 	if (chain1[i] < chain2[i])
 	{
+		result = 1;//chain1 comes before chain2 inthe alphabetical order
+	}else
+	{
+		result = 0;//chain1 comes after chain2 inthe alphabetical order
+	}
+
+	return result;
+}
+
+int isSortValue(float value1,float value2)
+{
+	int i = 0,result;
+
+	if (value1 <= value2)
+	{
 		result = 1;
 	}else
 	{
 		result = 0;
 	}
-
+	
 	return result;
 }
