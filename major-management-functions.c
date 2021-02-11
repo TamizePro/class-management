@@ -304,6 +304,7 @@ void adjustRankingExAequo(StudentList *listStudents)
 			{
 				int rank1 = currentStudent->rank,rank2 = exAequoStudent->rank;
 
+				//takes the minimum rank and assigns it to both students
 				currentStudent->rank = ((rank1 < rank2)?rank1:rank2);
 				exAequoStudent->rank = ((rank1 < rank2)?rank1:rank2);
 			}
@@ -320,16 +321,16 @@ void controlRanking(StudentList *listStudents)
 
 	while(currentStudent != NULL)
 	{
+		//recounts the number of students in the class
 		listStudents->effectiveNumber++;
 		currentStudent->rank = listStudents->effectiveNumber;
 		currentStudent = currentStudent->nextStudent;
-	}//recounts the number of students in the class
+	}
+	adjustRankingExAequo(listStudents);
 }
 void updateStudentListInfo(StudentList *listStudents)
 {
 	sortStudentsByRank(listStudents);
-	controlRanking(listStudents);
-	adjustRankingExAequo(listStudents);
 	getClassAverage(listStudents);
 	getBestAverage(listStudents);
 	getWorstAverage(listStudents);
@@ -360,4 +361,5 @@ void sortStudentsByRank(StudentList *listStudents)
 		}
 		currentStudent = currentStudent->nextStudent;
 	}
+	controlRanking(listStudents);
 }

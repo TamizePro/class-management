@@ -45,7 +45,6 @@ void printSearchResults(StudentList *listStudents,StudentList *correspondingStud
 	{
 	  	printf("This is the only student corresponding to your entry:\n");
 	  	showInfoStudents(correspondingStudentsList);
-	  	printf("------------------------------------------------------------------------------------\n");
 	  	*subChoice2 = getSearchChoice2();
 
 	  	switch(*subChoice2)
