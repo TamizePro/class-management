@@ -23,11 +23,11 @@ void saveData(StudentList *listStudents)
     	{
     		controlChain(currentStudent->name);
     		controlChain(currentStudent->id);
-    		fprintf(saveFile,"%s;%s;%d;",currentStudent->name,currentStudent->id,currentStudent->age);
-    		fprintf(saveFile, "%3.3f;",currentStudent->score[MATH_INDEX]);
-    		fprintf(saveFile, "%3.3f;",currentStudent->score[ENGLISH_INDEX]);
-    		fprintf(saveFile, "%3.3f;",currentStudent->score[FRENCH_INDEX]);
-    		fprintf(saveFile, "%3.3f;",currentStudent->score[PHYSICS_INDEX]);
+    		fprintf(saveFile,"%s %s %d ",currentStudent->name,currentStudent->id,currentStudent->age);
+    		fprintf(saveFile, "%3.3f ",currentStudent->score[MATH_INDEX]);
+    		fprintf(saveFile, "%3.3f ",currentStudent->score[ENGLISH_INDEX]);
+    		fprintf(saveFile, "%3.3f ",currentStudent->score[FRENCH_INDEX]);
+    		fprintf(saveFile, "%3.3f ",currentStudent->score[PHYSICS_INDEX]);
     		fprintf(saveFile, "%3.3f\n",currentStudent->score[COMPUTER_INDEX]);
     		currentStudent = currentStudent->nextStudent;
     	}
@@ -51,7 +51,8 @@ void loadData(StudentList *listStudents)
     {
         while(fgets(data,TAILLE_MAX,saveFile) != NULL)
         {
-            partitionData(data,studentName,studentId,&studentAge,studentScore);
+            sscanf(data, "%s %s %d %f %f %f %f %f", studentName, studentId, &studentAge, studentScore+MATH_INDEX,
+                studentScore+ENGLISH_INDEX, studentScore+FRENCH_INDEX,  studentScore+PHYSICS_INDEX,  studentScore+COMPUTER_INDEX);
             treatName(studentName);
             addStudent(listStudents,studentName,studentId,studentAge,studentScore);
         }
@@ -60,43 +61,6 @@ void loadData(StudentList *listStudents)
     else
     {
     	printf("The save file cannot be opened! Please try again later!!\n");
-    }
-}
-void partitionData(char *mainChain,char *studentName,char *studentId,int *studentAge,float *studentScore)
-{
-    char *string = NULL;
-
-    string = strtok(mainChain,";");
-    for (int i = 0; i < 8; ++i)
-    {
-        switch(i)
-        {
-            case 0:
-                strcpy(studentName,string);
-                break;
-            case 1:
-                strcpy(studentId,string);
-                break;
-            case 2:
-                *studentAge = (int)strtol(string,NULL,10);
-                break;
-            case 3:
-                studentScore[MATH_INDEX] = (float)strtod(string,NULL);
-                break;
-            case 4:
-                studentScore[ENGLISH_INDEX] = (float)strtod(string,NULL);
-                break;
-            case 5:
-                studentScore[FRENCH_INDEX] = (float)strtod(string,NULL);
-                break;
-            case 6:
-                studentScore[PHYSICS_INDEX] = (float)strtod(string,NULL);
-                break;
-            case 7:
-                studentScore[COMPUTER_INDEX] = (float)strtod(string,NULL);
-                break;
-        }
-        string = strtok(NULL,";");
     }
 }
 void treatName(char *chain)

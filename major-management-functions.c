@@ -123,7 +123,8 @@ void getStudentInfo(StudentList* listStudents,char* nameStudent,char* idStudent,
 	printf("Age: ");
 	scanf("%d",&ageStudent);
 	printf("Score in Maths: ");
-	scanf("%f",scoreStudent+MATH_INDEX);	printf("Score in English: ");
+	scanf("%f",scoreStudent+MATH_INDEX);
+	printf("Score in English: ");
 	scanf("%f",scoreStudent+ENGLISH_INDEX);
 	printf("Score in French: ");
 	scanf("%f",scoreStudent+FRENCH_INDEX);
@@ -193,11 +194,15 @@ void deleteOneStudent(StudentList *listStudents,char *chain)
 		if (position != NULL)
 		{//all the cases are taken into consideration
 			toDelete = currentStudent;
+
 			if (currentStudent == listStudents->firstStudent)
 			{
 				listStudents->firstStudent = listStudents->firstStudent->nextStudent;//To link the students before and after the one that was deleted
+			}else
+			{
+				previousStudent->nextStudent = currentStudent->nextStudent;//To link the students before and after the one that was deleted
 			}
-			previousStudent->nextStudent = currentStudent->nextStudent;//To link the students before and after the one that was deleted
+			
 			free(toDelete);
 			break;
 		} 

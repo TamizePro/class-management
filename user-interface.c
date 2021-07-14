@@ -37,22 +37,11 @@ void userInterface()
 				if(myListStudents->firstStudent == NULL)
 				{
 					printf("There are no students!!\n");
-			    }
-			    else
-				{
-					int orderChoice = getStudentsOrder();
-
-					if (orderChoice == 1)
-					{
-						sortStudents(myListStudents);
-					}else
-					{
-						sortStudentsByRank(myListStudents);
-					}
-
-					printf("This is the beginning of the list of students\n");
-			  		showInfoStudents(myListStudents);
-			  		printf("------------------------------------------------------------------------------------\n");
+			    }else
+			    {
+			    	printf("This is the beginning of the list of students\n");
+			    	showInfoStudents(myListStudents);
+			    	printf("------------------------------------------------------------------------------------\n");
 			  		printf("This is the end of the list of students\n");
 			    }
 			    break;
@@ -60,8 +49,7 @@ void userInterface()
 				if(myListStudents->firstStudent == NULL)
 				{
 					printf("There are no students!!\n");
-			    }
-			    else
+			    }else
 				{
 					int deleteChoice = getDeleteValidation();
 
@@ -84,12 +72,23 @@ void userInterface()
 		  	case 5:
 				printStudentListInfo(myListStudents);
 				break;
-			case 6:
+			case 6: ;
+				int orderChoice = getStudentsOrder();
+
+				if (orderChoice == 1)
+				{
+					sortStudents(myListStudents);
+				}else
+				{
+					sortStudentsByRank(myListStudents);
+				}
+				break;
+			case 7:
 				saveData(myListStudents);
 				deleteStudents(myListStudents);
 			  	break;
 		}
-	}while(choice != 6);
+	}while(choice != 7);
 	
 	free(myListStudents);
 }

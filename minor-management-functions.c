@@ -12,7 +12,8 @@ void printMenu()
 	printf("3.)Delete all students.\n");
 	printf("4.)Search for a student.\n");
 	printf("5.)See the general information of the class.\n");
-	printf("6.)Stop working.\n");
+	printf("6.)Sort the class.\n");
+	printf("7.)Stop working.\n");
 	printf("Please select(write) the number corresponding to your choice .\n");
 }
 int getChoice()
@@ -25,7 +26,7 @@ int getChoice()
 		printMenu();
 		fgets(control,10,stdin);
 		menuChoice = (int)strtol(control,NULL,10);
-	}while(menuChoice > 6 || menuChoice < 1);
+	}while(menuChoice > 7 || menuChoice < 1);
 
 	return menuChoice;
 }
@@ -100,7 +101,7 @@ int getSearchOption()
 }
 void printDeleteValidationMenu()
 {
-	printf("********************************DELETE*ALL*STUDENTS******************************\n");
+	printf("*********************************DELETE*ALL*STUDENTS********************************\n");
 	printf("Are you sure you want to delete the information of all the students?\n");
 	printf("1.)Yes.\n");
 	printf("2.)No.\n");
@@ -122,7 +123,7 @@ int getDeleteValidation()
 }
 void printSortOptions()
 {
-	printf("********************************SHOW**ALL**STUDENTS*******************************\n");
+	printf("*********************************SORT**ALL**STUDENTS********************************\n");
 	printf("Which order will you prefer?\n");
 	printf("1.)Alphabetical order.\n");
 	printf("2.)Ranking order.\n");
